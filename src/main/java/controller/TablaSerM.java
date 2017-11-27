@@ -8,6 +8,7 @@ package controller;
 import dao.TablaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,16 +37,20 @@ public class TablaSerM extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idT=Integer.parseInt(request.getParameter("id_tabla"));
-        TablaDAO tabla_dao = new TablaDAO();
-
         try {
-            tabla_dao.deleteTabla(idT);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            int idT=Integer.parseInt(request.getParameter("id_tabla"));
+            TablaDAO tabla_dao = new TablaDAO();
+            
+            try {
+                tabla_dao.deleteTabla(idT);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(TablaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        response.sendRedirect("menu.html"); 
     }
 
     /**
@@ -59,18 +64,22 @@ public class TablaSerM extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombreT=request.getParameter("nombre_tabla");
-        int idT=Integer.parseInt(request.getParameter("id_tabla"));
-        TablaDAO tabla_dao = new TablaDAO();
-
         try {
-            tabla_dao.updateTabla(nombreT,idT);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            String nombreT=request.getParameter("nombre_tabla");
+            int idT=Integer.parseInt(request.getParameter("id_tabla"));
+            TablaDAO tabla_dao = new TablaDAO();
+            
+            try {
+                tabla_dao.updateTabla(nombreT,idT);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(TablaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        response.sendRedirect("menu.html");
     }
 
     /**

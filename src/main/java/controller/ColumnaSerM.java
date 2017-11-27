@@ -9,6 +9,7 @@ import dao.ColumnaDAO;
 import dao.TablaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,16 +36,20 @@ public class ColumnaSerM extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idC = Integer.parseInt(request.getParameter("id_columna"));
-        ColumnaDAO columna_dao = new ColumnaDAO();
-
         try {
-            columna_dao.deleteColumna(idC);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            int idC = Integer.parseInt(request.getParameter("id_columna"));
+            ColumnaDAO columna_dao = new ColumnaDAO();
+            
+            try {
+                columna_dao.deleteColumna(idC);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ColumnaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        response.sendRedirect("menu.html");
     }
 
     /**
@@ -58,17 +63,21 @@ public class ColumnaSerM extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombreC = request.getParameter("nombre_columna");
-        int idC = Integer.parseInt(request.getParameter("id_columna"));
-        String tipoC = request.getParameter("tipo");
-        ColumnaDAO columna_dao = new ColumnaDAO();
         try {
+            String nombreC = request.getParameter("nombre_columna");
+            int idC = Integer.parseInt(request.getParameter("id_columna"));
+            String tipoC = request.getParameter("tipo");
+            ColumnaDAO columna_dao = new ColumnaDAO();
+            try {
                 columna_dao.updateColumna(nombreC, tipoC, idC);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ColumnaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        response.sendRedirect("menu.html");
     }
 
     /**

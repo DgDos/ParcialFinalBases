@@ -1,5 +1,6 @@
 package dao;
 
+import java.net.URISyntaxException;
 import model.Tabla;
 import util.DbUtil;
 import java.sql.Connection;
@@ -8,12 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TablaDAO {
 
     private Connection connection;
 
-    public TablaDAO() {
+    public TablaDAO() throws URISyntaxException {
         connection = DbUtil.getConnection();
     }
 
@@ -25,16 +28,20 @@ public class TablaDAO {
     }
 
     public void deleteTabla(int id_tabla) throws SQLException {
-        PreparedStatement rs = connection.prepareStatement("select * from columna where id_tabla=?");
-        rs.setInt(1, id_tabla);
-        ResultSet rt=rs.executeQuery();
-        ColumnaDAO cd=new ColumnaDAO();
-        while (rt.next()) {
-            cd.deleteColumna(rt.getInt("id_columna"));
+        try {
+            PreparedStatement rs = connection.prepareStatement("select * from columna where id_tabla=?");
+            rs.setInt(1, id_tabla);
+            ResultSet rt=rs.executeQuery();
+            ColumnaDAO cd=new ColumnaDAO();
+            while (rt.next()) {
+                cd.deleteColumna(rt.getInt("id_columna"));
+            }
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from tabla where id_tabla=?");
+            preparedStatement.setInt(1, id_tabla);
+            preparedStatement.executeUpdate();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(TablaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        PreparedStatement preparedStatement = connection.prepareStatement("delete from tabla where id_tabla=?");
-        preparedStatement.setInt(1, id_tabla);
-        preparedStatement.executeUpdate();
     }
 
     public void updateTabla(String nombreT,int idT) throws SQLException {

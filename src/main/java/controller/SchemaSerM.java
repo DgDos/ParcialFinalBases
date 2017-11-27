@@ -8,6 +8,7 @@ package controller;
 import dao.EsquemaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,17 +37,21 @@ public class SchemaSerM extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idE=Integer.parseInt(request.getParameter("id_esquema"));
-        EsquemaDAO esquema_dao = new EsquemaDAO();
-        System.out.println(idE);
-
         try {
-            esquema_dao.deleteEsquema(idE);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            int idE=Integer.parseInt(request.getParameter("id_esquema"));
+            EsquemaDAO esquema_dao = new EsquemaDAO();
+            System.out.println(idE);
+            
+            try {
+                esquema_dao.deleteEsquema(idE);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(SchemaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        response.sendRedirect("menu.html"); 
     }
 
     /**
@@ -60,18 +65,22 @@ public class SchemaSerM extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nombreE=request.getParameter("nombre_esquema");
-        int idE=Integer.parseInt(request.getParameter("id_esquema"));
-        EsquemaDAO esquema_dao = new EsquemaDAO();
-
         try {
-            esquema_dao.updateEsquema(nombreE,idE);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            String nombreE=request.getParameter("nombre_esquema");
+            int idE=Integer.parseInt(request.getParameter("id_esquema"));
+            EsquemaDAO esquema_dao = new EsquemaDAO();
+            
+            try {
+                esquema_dao.updateEsquema(nombreE,idE);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            response.sendRedirect("menu.html");
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(SchemaSerM.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        response.sendRedirect("menu.html");
     }
 
     /**

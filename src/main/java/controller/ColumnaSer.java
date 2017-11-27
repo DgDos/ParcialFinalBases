@@ -3,6 +3,7 @@ package controller;
 import dao.ColumnaDAO;
 import dao.TablaDAO;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -21,50 +22,54 @@ public class ColumnaSer extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String action = request.getParameter("action");
-        TablaDAO td = new TablaDAO();
-        ArrayList<Tabla> respuesta = new ArrayList<>();
-        ColumnaDAO cd = new ColumnaDAO();
-        ArrayList<Columna> respuesta2 = new ArrayList<>();
-        if (action.equals("modificar")) {
-            try {
-                respuesta2 = cd.getAllColumna();
-            } catch (SQLException ex) {
-                Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            String action = request.getParameter("action");
+            TablaDAO td = new TablaDAO();
+            ArrayList<Tabla> respuesta = new ArrayList<>();
+            ColumnaDAO cd = new ColumnaDAO();
+            ArrayList<Columna> respuesta2 = new ArrayList<>();
+            if (action.equals("modificar")) {
+                try {
+                    respuesta2 = cd.getAllColumna();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/modificar_columna.jsp");
+                request.setAttribute("respuesta", respuesta2);
+                rd.forward(request, response);
             }
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/modificar_columna.jsp");
-            request.setAttribute("respuesta", respuesta2);
-            rd.forward(request, response);
-        }
-        if (action.equals("eliminar")) {
-            try {
-                respuesta2 = cd.getAllColumna();
-            } catch (SQLException ex) {
-                Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+            if (action.equals("eliminar")) {
+                try {
+                    respuesta2 = cd.getAllColumna();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/eliminar_columna.jsp");
+                request.setAttribute("respuesta", respuesta2);
+                rd.forward(request, response);
             }
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/eliminar_columna.jsp");
-            request.setAttribute("respuesta", respuesta2);
-            rd.forward(request, response);
-        }
-        if (action.equals("listar")) {
-            try {
-                respuesta2 = cd.getAllColumna();
-            } catch (SQLException ex) {
-                Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+            if (action.equals("listar")) {
+                try {
+                    respuesta2 = cd.getAllColumna();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/listar_columna.jsp");
+                request.setAttribute("respuesta", respuesta2);
+                rd.forward(request, response);
             }
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/listar_columna.jsp");
-            request.setAttribute("respuesta", respuesta2);
-            rd.forward(request, response);
-        }
-        if (action.equals("agregar")) {
-            try {
-                respuesta = td.getAllTables();
-            } catch (SQLException ex) {
-                Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+            if (action.equals("agregar")) {
+                try {
+                    respuesta = td.getAllTables();
+                } catch (SQLException ex) {
+                    Logger.getLogger(TablaSer.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                RequestDispatcher rd = getServletContext().getRequestDispatcher("/agregar_columna.jsp");
+                request.setAttribute("respuesta", respuesta);
+                rd.forward(request, response);
             }
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/agregar_columna.jsp");
-            request.setAttribute("respuesta", respuesta);
-            rd.forward(request, response);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ColumnaSer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -72,20 +77,26 @@ public class ColumnaSer extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        ColumnaDAO columna_dao = new ColumnaDAO();
-        String nombre_columna = request.getParameter("nombre_columna");
-        String data_type = request.getParameter("data_type");
-        int id_tabla = Integer.parseInt(request.getParameter("id_tabla"));
-
-        Columna columna = new Columna(nombre_columna, data_type, id_tabla);
-
         try {
-            columna_dao.addColumna(columna);
-        } catch (SQLException ex) {
-            Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            
+            ColumnaDAO columna_dao = new ColumnaDAO();
+            String nombre_columna = request.getParameter("nombre_columna");
+            String data_type = request.getParameter("data_type");
+            int id_tabla = Integer.parseInt(request.getParameter("id_tabla"));
+            
+            Columna columna = new Columna(nombre_columna, data_type, id_tabla);
+            
+            try {
+                columna_dao.addColumna(columna);
+            } catch (SQLException ex) {
+                Logger.getLogger(SchemaSer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            response.sendRedirect("menu.html");
+            
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ColumnaSer.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        response.sendRedirect("menu.html");
 
     }
 

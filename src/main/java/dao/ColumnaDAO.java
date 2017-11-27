@@ -1,5 +1,6 @@
 package dao;
 
+import java.net.URISyntaxException;
 import util.DbUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +15,7 @@ public class ColumnaDAO {
 
     private Connection connection;
 
-    public ColumnaDAO() {
+    public ColumnaDAO() throws URISyntaxException {
         connection = DbUtil.getConnection();
     }
 
