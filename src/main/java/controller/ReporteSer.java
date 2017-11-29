@@ -36,7 +36,7 @@ public class ReporteSer extends HttpServlet {
                     }
                 }
             }
-            RequestDispatcher rd = getServletContext().getRequestDispatcher("/reporte.jsp");
+            RequestDispatcher rd = getServletContext().getRequestDispatcher("/union.jsp");
             request.setAttribute("respuesta", union);
             rd.forward(request, response);
         } catch (URISyntaxException ex) {
@@ -44,7 +44,7 @@ public class ReporteSer extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(ReporteSer.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     @Override
