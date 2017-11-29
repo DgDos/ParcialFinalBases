@@ -1,82 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>SchemaSer</servlet-name>
-        <servlet-class>controller.SchemaSer</servlet-class>
+        <servlet-name>ReporteSer</servlet-name>
+        <servlet-class>controller.ReporteSer</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>ColumnaSer</servlet-name>
-        <servlet-class>controller.ColumnaSer</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TablaSer</servlet-name>
-        <servlet-class>controller.TablaSer</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>VisualizarSer</servlet-name>
-        <servlet-class>controller.VisualizarSer</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SchemaSerM</servlet-name>
-        <servlet-class>controller.SchemaSerM</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>TablaSerM</servlet-name>
-        <servlet-class>controller.TablaSerM</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ColumnaSerM</servlet-name>
-        <servlet-class>controller.ColumnaSerM</servlet-class>
-    </servlet>
+    
     <servlet-mapping>
-        <servlet-name>ClienteController</servlet-name>
-        <url-pattern>/ClienteController</url-pattern>
+        <servlet-name>ReporteSer</servlet-name>
+        <url-pattern>/ReporteSer</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SchemaSer</servlet-name>
-        <url-pattern>/SchemaSer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ColumnaSer</servlet-name>
-        <url-pattern>/ColumnaSer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TablaSer</servlet-name>
-        <url-pattern>/TablaSer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>VisualizarSer</servlet-name>
-        <url-pattern>/VisualizarSer</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SchemaSerM</servlet-name>
-        <url-pattern>/SchemaSerM</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>TablaSerM</servlet-name>
-        <url-pattern>/TablaSerM</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ColumnaSerM</servlet-name>
-        <url-pattern>/ColumnaSerM</url-pattern>
-    </servlet-mapping>
+    
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <servlet>
-        <description/>
-        <display-name>UserController</display-name>
-        <servlet-name>UserController</servlet-name>
-        <servlet-class>controller.UserController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClienteController</servlet-name>
-        <servlet-class>controller.ClienteController</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>UserController</servlet-name>
-        <url-pattern>/UserController</url-pattern>
-    </servlet-mapping>
+   
     <session-config>
         <session-timeout>
             30

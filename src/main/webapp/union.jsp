@@ -1,5 +1,5 @@
+<%@page import="util.Union"%>
 <%@page import="java.util.ArrayList"%>
-<%@page import="model.Esquema"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!DOCTYPE html>
@@ -11,7 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Listar Esquemas</title>
+        <title>Reporte</title>
         <!--
         Ocean Theme
         http://www.templatemo.com/tm-484-ocean
@@ -40,7 +40,7 @@
             <section>
 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 text-xs-center">
-                    <h2 class="tm-section-title">Lista de Esquemas</h2>
+                    <h2 class="tm-section-title">Reporte</h2>
                     <br>
                 </div>
 
@@ -49,37 +49,43 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id Esquema </th>
-                                <th>Nombre Esquema</th>
+                                <th>Id Colmena </th>
+                                <th>Ubicacion</th>
+                                <th>Fabrica</th>
+                                <th>Total Kilos</th>
+                                <th>Id Colmena Madre </th>
+                                <th>Ubicacion Madre</th>
+                                <th>Fabrica Madre</th>
                             </tr>
                         </thead>
                         <tbody>
-
                             <%if (request.getAttribute("respuesta") != null) {
+                                    ArrayList<Union> array = (ArrayList<Union>) request.getAttribute("respuesta");
 
-                                    ArrayList<Esquema> array = (ArrayList<Esquema>) request.getAttribute("respuesta");
-
-                                    for (Esquema esquema : array) {
+                                    for (Union u : array) {
 
                             %>
 
                             <tr>
-                                <th scope="row"><%=esquema.getId_esquema()%></th>
-                                <td><%=esquema.getNombre_esquema()%></td>
+                                <th scope="row"><%=u.getIdColmena()%></th>
+                                <td><%=u.getUbicacion()%></td>
+                                <td><%=u.getFabrica()%></td>
+                                <td><%=u.getTotalKilos()%></td>
+                                <td><%=u.getIdColmenaMadre()%></td>
+                                <td><%=u.getIdColmenaMadreU()%></td>
+                                <td><%=u.getIdColmenaMadreF()%></td>
                             </tr>
 
                             <%      }
                                 }
                             %>
-
                         </tbody>
                     </table>
 
                 </div>
 
             </section>
-            <p align="center"><a class="btn btn-primary btn-lg" href="menu.html" role="button">Volver</a></p>
-            <br>
+            <p align="center"><a class="btn btn-primary btn-lg" href="index.jsp" role="button">Volver</a></p>
         </div> 
 
     </body>
